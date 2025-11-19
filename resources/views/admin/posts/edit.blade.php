@@ -178,42 +178,94 @@
                                     <i class="fas fa-image text-primary-600 mr-2"></i>
                                     Gambar Utama
                                 </label>
-                                <div class="space-y-3">
+                                
+                                <div class="space-y-4">
+                                    <!-- Current Image Display -->
                                     @if($post->featured_image)
-                                    <div class="flex items-center space-x-4 p-4 bg-gray-50 rounded-xl">
-                                        <div class="w-16 h-16 rounded-lg overflow-hidden bg-gray-200">
-                                            <img src="{{ asset('storage/' . $post->featured_image) }}" 
-                                                 alt="Current featured image" 
-                                                 class="w-full h-full object-cover">
+                                    <div id="current-image-container" class="bg-gray-50 border-2 border-gray-200 rounded-xl p-4">
+                                        <div class="flex items-center justify-between mb-3">
+                                            <p class="text-sm font-medium text-gray-700 flex items-center">
+                                                <i class="fas fa-check-circle text-green-500 mr-2"></i>
+                                                Gambar Saat Ini
+                                            </p>
+                                            <span class="text-xs text-gray-500">Klik tombol di bawah untuk mengganti</span>
                                         </div>
-                                        <div class="flex-1">
-                                            <p class="text-sm font-medium text-gray-800">Gambar Saat Ini</p>
-                                            <p class="text-xs text-gray-500">Klik tombol di bawah untuk mengganti</p>
+                                        <div class="flex items-center space-x-4">
+                                            <div class="w-20 h-20 rounded-lg overflow-hidden bg-gray-200 flex-shrink-0">
+                                                <img src="{{ asset('storage/' . $post->featured_image) }}" 
+                                                    alt="Current featured image" 
+                                                    class="w-full h-full object-cover">
+                                            </div>
+                                            <div class="flex-1">
+                                                <p class="text-sm text-gray-600">Gambar sudah diupload sebelumnya</p>
+                                                <p class="text-xs text-gray-500 mt-1">Ukuran optimal: 1200×630px</p>
+                                            </div>
                                         </div>
                                     </div>
                                     @endif
-                                    
-                                    <div class="relative">
-                                        <input type="file" 
-                                               name="featured_image" 
-                                               id="featured_image" 
-                                               class="hidden"
-                                               accept="image/*">
-                                        <label for="featured_image" 
-                                               class="w-full border-2 border-dashed border-gray-300 rounded-xl p-4 text-center cursor-pointer hover:border-primary-400 hover:bg-primary-50 transition duration-200 group">
-                                            <div id="image-preview" class="hidden mb-3">
-                                                <img id="preview-img" class="mx-auto max-h-24 rounded-lg shadow-sm">
+
+                                    <!-- New Image Upload Area -->
+                                    <div id="new-upload-area" class="{{ $post->featured_image ? 'hidden' : '' }}">
+                                        <!-- Image Preview for New Upload -->
+                                        <div id="image-preview-container" class="hidden mb-4">
+                                            <div class="bg-gray-50 border-2 border-dashed border-primary-300 rounded-xl p-4 text-center">
+                                                <div class="mb-3">
+                                                    <img id="preview-img" class="mx-auto max-h-48 rounded-lg shadow-md object-cover">
+                                                </div>
+                                                <div class="flex justify-center space-x-3">
+                                                    <button type="button" 
+                                                            onclick="removeImage()"
+                                                            class="bg-red-500 text-white px-4 py-2 rounded-lg hover:bg-red-600 transition duration-200 text-sm font-semibold flex items-center">
+                                                        <i class="fas fa-trash mr-2"></i>
+                                                        Hapus Gambar
+                                                    </button>
+                                                    <label for="featured_image" 
+                                                        class="bg-primary-600 text-white px-4 py-2 rounded-lg hover:bg-primary-700 transition duration-200 text-sm font-semibold flex items-center cursor-pointer">
+                                                        <i class="fas fa-sync mr-2"></i>
+                                                        Ganti Gambar
+                                                    </label>
+                                                </div>
                                             </div>
-                                            <div id="upload-placeholder">
-                                                <i class="fas fa-cloud-upload-alt text-2xl text-gray-400 mb-2 group-hover:text-primary-500 transition duration-200"></i>
-                                                <p class="text-sm font-medium text-gray-600 group-hover:text-primary-600">
-                                                    {{ $post->featured_image ? 'Ganti Gambar' : 'Upload Gambar Utama' }}
-                                                </p>
-                                                <p class="text-xs text-gray-500 mt-1">PNG, JPG, JPEG (Max 2MB)</p>
-                                            </div>
-                                        </label>
+                                        </div>
+
+                                        <!-- Upload Placeholder -->
+                                        <div id="upload-placeholder">
+                                            <label for="featured_image" 
+                                                class="block w-full border-2 border-dashed border-gray-300 rounded-xl p-6 text-center cursor-pointer hover:border-primary-400 hover:bg-primary-50 transition duration-300 group">
+                                                <div class="space-y-3">
+                                                    <i class="fas fa-cloud-upload-alt text-3xl text-gray-400 group-hover:text-primary-500 transition duration-200"></i>
+                                                    <div>
+                                                        <p class="text-lg font-medium text-gray-600 group-hover:text-primary-600 transition duration-200">
+                                                            {{ $post->featured_image ? 'Ganti Gambar Utama' : 'Upload Gambar Utama' }}
+                                                        </p>
+                                                        <p class="text-sm text-gray-500 mt-1">
+                                                            PNG, JPG, JPEG (Rekomendasi: 1200x630px, Max 2MB)
+                                                        </p>
+                                                    </div>
+                                                    <div class="flex justify-center space-x-4 text-xs text-gray-500">
+                                                        <span class="flex items-center">
+                                                            <i class="fas fa-expand mr-1"></i>1200×630px
+                                                        </span>
+                                                        <span class="flex items-center">
+                                                            <i class="fas fa-weight-hanging mr-1"></i>Max 2MB
+                                                        </span>
+                                                        <span class="flex items-center">
+                                                            <i class="fas fa-images mr-1"></i>PNG, JPG, JPEG
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                            </label>
+                                        </div>
                                     </div>
+
+                                    <!-- Hidden File Input -->
+                                    <input type="file" 
+                                        name="featured_image" 
+                                        id="featured_image" 
+                                        class="hidden"
+                                        accept="image/*">
                                 </div>
+                                
                                 @error('featured_image')
                                     <p class="text-red-500 text-sm mt-2 flex items-center">
                                         <i class="fas fa-exclamation-circle mr-2"></i>{{ $message }}
@@ -488,5 +540,57 @@
         outline: none;
         box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
     }
+    /* Drag and drop animations */
+.scale-95 {
+    transform: scale(0.95);
+}
+
+/* Smooth transitions for upload area */
+label[for="featured_image"] {
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Image preview animations */
+#image-preview-container {
+    animation: fadeInUp 0.5s ease-out;
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* File info display */
+#image-info {
+    animation: slideIn 0.3s ease-out;
+}
+
+@keyframes slideIn {
+    from {
+        opacity: 0;
+        transform: translateX(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+/* Hover effects for action buttons */
+.bg-primary-600:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
+}
+
+.bg-red-500:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(239, 68, 68, 0.3);
+}
 </style>
 @endsection

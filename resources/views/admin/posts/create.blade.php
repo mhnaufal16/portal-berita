@@ -137,36 +137,79 @@
                                 @enderror
                             </div>
 
-                            <!-- Featured Image -->
-                            <div>
-                                <label for="featured_image" class="block text-sm font-medium text-gray-700 mb-3 flex items-center">
-                                    <i class="fas fa-image text-primary-600 mr-2"></i>
-                                    Gambar Utama
-                                </label>
-                                <div class="relative">
-                                    <input type="file" 
-                                           name="featured_image" 
-                                           id="featured_image" 
-                                           class="hidden"
-                                           accept="image/*">
-                                    <label for="featured_image" 
-                                           class="w-full border-2 border-dashed border-gray-300 rounded-xl p-6 text-center cursor-pointer hover:border-primary-400 hover:bg-primary-50 transition duration-200 group">
-                                        <div id="image-preview" class="hidden mb-4">
-                                            <img id="preview-img" class="mx-auto max-h-32 rounded-lg shadow-sm">
-                                        </div>
-                                        <div id="upload-placeholder">
-                                            <i class="fas fa-cloud-upload-alt text-3xl text-gray-400 mb-3 group-hover:text-primary-500 transition duration-200"></i>
-                                            <p class="text-sm font-medium text-gray-600 group-hover:text-primary-600">Upload Gambar Utama</p>
-                                            <p class="text-xs text-gray-500 mt-1">PNG, JPG, JPEG (Max 2MB)</p>
-                                        </div>
+                           <!-- Featured Image -->
+                                <div>
+                                    <label for="featured_image" class="block text-sm font-medium text-gray-700 mb-3 flex items-center">
+                                        <i class="fas fa-image text-primary-600 mr-2"></i>
+                                        Gambar Utama
                                     </label>
+                                    
+                                    <div class="space-y-4">
+                                        <!-- Image Preview Area -->
+                                        <div id="image-preview-container" class="hidden">
+                                            <div class="bg-gray-50 border-2 border-dashed border-gray-300 rounded-xl p-4 text-center">
+                                                <div class="mb-3">
+                                                    <img id="preview-img" class="mx-auto max-h-48 rounded-lg shadow-md object-cover">
+                                                </div>
+                                                <div class="flex justify-center space-x-3">
+                                                    <button type="button" 
+                                                            onclick="removeImage()"
+                                                            class="bg-red-500 text-white px-4 py-2 rounded-lg hover:bg-red-600 transition duration-200 text-sm font-semibold flex items-center">
+                                                        <i class="fas fa-trash mr-2"></i>
+                                                        Hapus Gambar
+                                                    </button>
+                                                    <label for="featured_image" 
+                                                        class="bg-primary-600 text-white px-4 py-2 rounded-lg hover:bg-primary-700 transition duration-200 text-sm font-semibold flex items-center cursor-pointer">
+                                                        <i class="fas fa-sync mr-2"></i>
+                                                        Ganti Gambar
+                                                    </label>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <!-- Upload Placeholder -->
+                                        <div id="upload-placeholder">
+                                            <label for="featured_image" 
+                                                class="block w-full border-2 border-dashed border-gray-300 rounded-xl p-8 text-center cursor-pointer hover:border-primary-400 hover:bg-primary-50 transition duration-300 group">
+                                                <div class="space-y-3">
+                                                    <i class="fas fa-cloud-upload-alt text-4xl text-gray-400 group-hover:text-primary-500 transition duration-200"></i>
+                                                    <div>
+                                                        <p class="text-lg font-medium text-gray-600 group-hover:text-primary-600 transition duration-200">
+                                                            Klik untuk Upload Gambar
+                                                        </p>
+                                                        <p class="text-sm text-gray-500 mt-1">
+                                                            PNG, JPG, JPEG (Rekomendasi: 1200x630px, Max 2MB)
+                                                        </p>
+                                                    </div>
+                                                    <div class="flex justify-center space-x-4 text-xs text-gray-500">
+                                                        <span class="flex items-center">
+                                                            <i class="fas fa-expand mr-1"></i>1200×630px
+                                                        </span>
+                                                        <span class="flex items-center">
+                                                            <i class="fas fa-weight-hanging mr-1"></i>Max 2MB
+                                                        </span>
+                                                        <span class="flex items-center">
+                                                            <i class="fas fa-images mr-1"></i>PNG, JPG, JPEG
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                            </label>
+                                        </div>
+
+                                        <!-- Hidden File Input -->
+                                        <input type="file" 
+                                            name="featured_image" 
+                                            id="featured_image" 
+                                            class="hidden"
+                                            accept="image/*">
+                                    </div>
+                                    
+                                    @error('featured_image')
+                                        <p class="text-red-500 text-sm mt-2 flex items-center">
+                                            <i class="fas fa-exclamation-circle mr-2"></i>{{ $message }}
+                                        </p>
+                                    @enderror
                                 </div>
-                                @error('featured_image')
-                                    <p class="text-red-500 text-sm mt-2 flex items-center">
-                                        <i class="fas fa-exclamation-circle mr-2"></i>{{ $message }}
-                                    </p>
-                                @enderror
-                            </div>
                         </div>
                     </div>
                 </div>
@@ -459,5 +502,58 @@
         outline: none;
         box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
     }
+
+    /* Drag and drop animations */
+.scale-95 {
+    transform: scale(0.95);
+}
+
+/* Smooth transitions for upload area */
+label[for="featured_image"] {
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Image preview animations */
+#image-preview-container {
+    animation: fadeInUp 0.5s ease-out;
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* File info display */
+#image-info {
+    animation: slideIn 0.3s ease-out;
+}
+
+@keyframes slideIn {
+    from {
+        opacity: 0;
+        transform: translateX(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+/* Hover effects for action buttons */
+.bg-primary-600:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
+}
+
+.bg-red-500:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(239, 68, 68, 0.3);
+}
 </style>
 @endsection

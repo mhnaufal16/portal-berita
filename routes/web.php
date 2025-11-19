@@ -14,6 +14,18 @@ Route::get('/dashboard', function () {
     return redirect()->route('admin.dashboard');
 });
 
+Route::prefix('admin')->name('admin.')->middleware(['auth'])->group(function () {
+    // Ubah parameter dari {page} menjadi {post}
+    Route::resource('pages', \App\Http\Controllers\Admin\PageController::class)
+         ->parameters(['pages' => 'post']); // ✅ TAMBAHKAN INI
+    
+    // Quick actions - juga ubah parameter
+    Route::post('/pages/{post}/publish', [\App\Http\Controllers\Admin\PageController::class, 'quickPublish'])
+        ->name('pages.quick-publish');
+    Route::post('/pages/{post}/unpublish', [\App\Http\Controllers\Admin\PageController::class, 'quickUnpublish'])
+        ->name('pages.quick-unpublish');
+});
+
 // Public Routes
 Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::get('/berita/{slug}', [PostController::class, 'show'])->name('posts.show');
