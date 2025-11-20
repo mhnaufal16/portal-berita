@@ -5,14 +5,14 @@
 
 @section('content')
 <div class="p-6">
-    <!-- Header with Stats -->
+    <!-- Header dengan informasi saja -->
     <div class="flex flex-col lg:flex-row lg:items-center lg:justify-between mb-8">
         <div>
             <h1 class="text-2xl font-bold text-gray-800 flex items-center">
                 <i class="fas fa-file-alt text-primary-600 mr-3"></i>
-                Manajemen Halaman
+                Profile Perusahaan
             </h1>
-            <p class="text-gray-600 mt-2">Kelola halaman statis seperti Profile Perusahaan, Kontak, dll.</p>
+            <p class="text-gray-600 mt-2">Kelola halaman profile perusahaan</p>
         </div>
         
         <div class="flex items-center space-x-4 mt-4 lg:mt-0">
@@ -23,21 +23,32 @@
                     <div class="text-gray-500">Total</div>
                 </div>
                 <div class="text-center">
-                    <div class="text-2xl font-bold text-green-600">{{ \App\Models\Page::where('is_published', true)->count() }}</div>
+                    <div class="text-2xl font-bold text-green-600">{{ $pages->where('is_published', true)->count() }}</div>
                     <div class="text-gray-500">Published</div>
                 </div>
                 <div class="text-center">
-                    <div class="text-2xl font-bold text-yellow-600">{{ \App\Models\Page::where('is_published', false)->count() }}</div>
+                    <div class="text-2xl font-bold text-yellow-600">{{ $pages->where('is_published', false)->count() }}</div>
                     <div class="text-gray-500">Draft</div>
                 </div>
             </div>
+        </div>
+    </div>
 
-            <!-- Create Button -->
-            <a href="{{ route('admin.pages.create') }}" 
-               class="bg-gradient-to-r from-primary-600 to-primary-700 text-white px-6 py-3 rounded-xl hover:from-primary-700 hover:to-primary-800 transition-all duration-300 shadow-lg hover:shadow-xl font-semibold flex items-center group">
-                <i class="fas fa-plus mr-2 group-hover:scale-110 transition-transform duration-200"></i>
-                Tambah Halaman
-            </a>
+    <!-- Info Box -->
+    <div class="bg-blue-50 border border-blue-200 rounded-2xl p-6 mb-8">
+        <div class="flex items-start space-x-4">
+            <div class="flex-shrink-0">
+                <div class="w-12 h-12 bg-blue-100 rounded-xl flex items-center justify-center">
+                    <i class="fas fa-info-circle text-blue-600 text-xl"></i>
+                </div>
+            </div>
+            <div class="flex-1">
+                <h4 class="font-semibold text-blue-800 mb-2">Informasi Halaman</h4>
+                <p class="text-blue-700 text-sm">
+                    Halaman profile perusahaan dapat diakses di: 
+                    <code class="bg-blue-100 px-2 py-1 rounded ml-1">{{ url('/profile-perusahaan') }}</code>
+                </p>
+            </div>
         </div>
     </div>
 
@@ -99,12 +110,12 @@
             <div class="flex items-center justify-between pt-4 border-t border-gray-100">
                 <div class="flex items-center space-x-2">
                     @if($page->is_published)
-                    <a href="{{ url('/' . $page->slug) }}" 
+                    <a href="{{ url('/profile-perusahaan') }}" 
                        target="_blank"
                        class="text-blue-600 hover:text-blue-800 text-sm font-medium flex items-center transition duration-200"
                        title="Lihat di Website">
                         <i class="fas fa-external-link-alt mr-1 text-xs"></i>
-                        View
+                        Lihat
                     </a>
                     @endif
                 </div>
@@ -140,49 +151,18 @@
                     <div class="w-20 h-20 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-4">
                         <i class="fas fa-file-alt text-gray-400 text-2xl"></i>
                     </div>
-                    <h3 class="text-xl font-semibold text-gray-600 mb-2">Belum Ada Halaman</h3>
-                    <p class="text-gray-500 mb-6">Mulai dengan membuat halaman pertama untuk website Anda</p>
-                    <a href="{{ route('admin.pages.create') }}" 
-                       class="bg-primary-600 text-white px-8 py-3 rounded-xl hover:bg-primary-700 transition duration-200 font-semibold inline-flex items-center">
-                        <i class="fas fa-plus mr-2"></i>
-                        Buat Halaman Pertama
-                    </a>
+                    <h3 class="text-xl font-semibold text-gray-600 mb-2">Belum Ada Halaman Profile</h3>
+                    <p class="text-gray-500 mb-6">Halaman profile perusahaan akan dibuat otomatis.</p>
+                    <div class="bg-yellow-50 border border-yellow-200 rounded-xl p-4">
+                        <p class="text-yellow-700 text-sm">
+                            Akses <code class="bg-yellow-100 px-2 py-1 rounded">{{ url('/profile-perusahaan') }}</code> 
+                            untuk melihat halaman profile default.
+                        </p>
+                    </div>
                 </div>
             </div>
         </div>
         @endforelse
-    </div>
-
-    <!-- Quick Tips -->
-    <div class="bg-gradient-to-r from-blue-50 to-indigo-50 border border-blue-200 rounded-2xl p-6">
-        <div class="flex items-start space-x-4">
-            <div class="flex-shrink-0">
-                <div class="w-12 h-12 bg-blue-100 rounded-xl flex items-center justify-center">
-                    <i class="fas fa-lightbulb text-blue-600 text-xl"></i>
-                </div>
-            </div>
-            <div class="flex-1">
-                <h4 class="font-semibold text-blue-800 mb-3">Tips Manajemen Halaman</h4>
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-3 text-sm text-blue-700">
-                    <div class="flex items-start">
-                        <i class="fas fa-check mt-1 mr-3 text-blue-600 text-xs flex-shrink-0"></i>
-                        <span>Gunakan slug yang deskriptif dan SEO-friendly</span>
-                    </div>
-                    <div class="flex items-start">
-                        <i class="fas fa-check mt-1 mr-3 text-blue-600 text-xs flex-shrink-0"></i>
-                        <span>Halaman published akan bisa diakses publik</span>
-                    </div>
-                    <div class="flex items-start">
-                        <i class="fas fa-check mt-1 mr-3 text-blue-600 text-xs flex-shrink-0"></i>
-                        <span>Gunakan konten yang informatif dan lengkap</span>
-                    </div>
-                    <div class="flex items-start">
-                        <i class="fas fa-check mt-1 mr-3 text-blue-600 text-xs flex-shrink-0"></i>
-                        <span>Review konten sebelum mempublikasikan</span>
-                    </div>
-                </div>
-            </div>
-        </div>
     </div>
 </div>
 

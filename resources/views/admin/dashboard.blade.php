@@ -121,19 +121,6 @@
                         </div>
                     </a>
 
-                    <a href="{{ route('admin.pages.create') }}" 
-                       class="group bg-gradient-to-r from-purple-50 to-purple-100 border border-purple-200 rounded-xl p-5 hover:from-purple-100 hover:to-purple-200 transition-all duration-300 transform hover:scale-105 hover:shadow-md">
-                        <div class="flex items-center space-x-4">
-                            <div class="bg-purple-500 text-white p-3 rounded-lg group-hover:scale-110 transition duration-300">
-                                <i class="fas fa-file-alt text-lg"></i>
-                            </div>
-                            <div>
-                                <h4 class="font-semibold text-gray-800">Buat Halaman</h4>
-                                <p class="text-sm text-gray-600 mt-1">Tambah halaman statis</p>
-                            </div>
-                        </div>
-                    </a>
-
                     <a href="{{ route('admin.posts.index') }}" 
                        class="group bg-gradient-to-r from-orange-50 to-orange-100 border border-orange-200 rounded-xl p-5 hover:from-orange-100 hover:to-orange-200 transition-all duration-300 transform hover:scale-105 hover:shadow-md">
                         <div class="flex items-center space-x-4">
