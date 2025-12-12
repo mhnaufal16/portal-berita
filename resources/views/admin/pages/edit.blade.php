@@ -379,15 +379,45 @@
     </div>
 </div>
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/tinymce/6.8.2/tinymce.min.js" referrerpolicy="origin"></script>
 <script>
+    // Initialize TinyMCE
+    tinymce.init({
+        selector: '#content',
+        height: 800,
+        plugins: 'anchor autolink charmap codesample emoticons image link lists media searchreplace table visualblocks wordcount',
+        toolbar: 'undo redo | blocks fontfamily fontsize | bold italic underline strikethrough | link image media table | align lineheight | numlist bullist indent outdent | emoticons charmap | removeformat',
+        content_style: 'body { font-family:Instrument Sans,sans-serif; font-size:16px }',
+        setup: function (editor) {
+            editor.on('input change', function () {
+                const content = editor.getContent();
+                const counter = document.getElementById('content-counter');
+                
+                counter.textContent = content.length + ' karakter';
+                
+                if (content.length > 50000) {
+                    counter.classList.add('text-red-500');
+                } else {
+                    counter.classList.remove('text-red-500');
+                }
+            });
+        }
+    });
+
     // Auto generate slug from title
     document.getElementById('title').addEventListener('input', function() {
+        // Only auto-update slug if it's empty or matches cleaned title (to prevent overwriting custom slug)
+        // But for simplicity in this script, we'll keep the existing logic or make it smarter.
         const title = this.value;
+        const slugInput = document.getElementById('slug');
+        
+        // Simple logic: update slug match to title
         const slug = title.toLowerCase()
             .replace(/[^a-z0-9 -]/g, '')
             .replace(/\s+/g, '-')
             .replace(/-+/g, '-');
-        document.getElementById('slug').value = slug;
+            
+        slugInput.value = slug;
         document.getElementById('slug-preview').textContent = slug;
     });
 
@@ -395,20 +425,6 @@
     document.getElementById('slug').addEventListener('input', function() {
         const slug = this.value;
         document.getElementById('slug-preview').textContent = slug;
-    });
-
-    // Content character counter
-    document.getElementById('content').addEventListener('input', function() {
-        const content = this.value;
-        const counter = document.getElementById('content-counter');
-        
-        counter.textContent = content.length + ' karakter';
-        
-        if (content.length > 10000) {
-            counter.classList.add('text-red-500');
-        } else {
-            counter.classList.remove('text-red-500');
-        }
     });
 
     // Image preview functionality
@@ -429,12 +445,6 @@
         } else {
             previewContainer.classList.add('hidden');
         }
-    });
-
-    // Initialize counters on page load
-    document.addEventListener('DOMContentLoaded', function() {
-        const content = document.getElementById('content').value;
-        document.getElementById('content-counter').textContent = content.length + ' karakter';
     });
 </script>
 

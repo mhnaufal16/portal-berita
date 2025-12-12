@@ -12,7 +12,7 @@
                 <i class="fas fa-newspaper text-primary-600 mr-3"></i>
                 Manajemen Berita
             </h1>
-            <p class="text-gray-600 mt-2">Kelola semua berita dan artikel di portal berita Anda</p>
+            <p class="text-gray-600 mt-2">Kelola semua berita dan artikel di Perisai Demokrasi Bangsa Anda</p>
         </div>
         
         <div class="flex items-center space-x-4 mt-4 lg:mt-0">

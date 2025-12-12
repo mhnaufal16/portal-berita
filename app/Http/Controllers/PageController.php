@@ -16,12 +16,12 @@ class PageController extends Controller
     // Jika tidak ada, tampilkan default tanpa membuat database record
     if (!$page) {
         $profileData = [
-            'nama_perusahaan' => 'PortalBerita Media Group',
+            'nama_perusahaan' => 'Perisai Demokrasi Bangsa Media Group',
             'tagline' => 'Informasi Terkini dan Terpercaya',
-            'deskripsi' => 'PortalBerita adalah platform media digital terdepan yang menyajikan informasi aktual, berita terkini, dan analisis mendalam untuk masyarakat Indonesia. Kami berkomitmen menyampaikan berita yang akurat, cepat, dan terpercaya.',
+            'deskripsi' => 'Perisai Demokrasi Bangsa adalah platform media digital terdepan yang menyajikan informasi aktual, berita terkini, dan analisis mendalam untuk masyarakat Indonesia. Kami berkomitmen menyampaikan berita yang akurat, cepat, dan terpercaya.',
             'alamat' => 'Gedung Media Center Lt. 5, Jl. Prof. Dr. Satrio No. 123, Jakarta Selatan 12950',
             'telepon' => '+62 21 1234 5678',
-            'email' => 'info@portalberita.com',
+            'email' => 'info@perisaidemokrasibangsa.com',
             'tahun_berdiri' => '2018',
             'jumlah_karyawan' => '150+',
             'visi' => 'Menjadi platform media digital terpercaya nomor satu di Indonesia yang mengedukasi dan memberdayakan masyarakat melalui informasi yang akurat dan berkualitas.',

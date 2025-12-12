@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tentang Kami - Portal Berita</title>
+    <title>Tentang Kami - Perisai Demokrasi Bangsa</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="icon" href="{{ asset('img/logo.png') }}">
@@ -18,7 +18,7 @@
                         <img src="{{ asset('img/logo.png') }}" alt="Logo" class="w-full h-full object-contain">
                     </div>
                     <div>
-                        <h1 class="text-2xl font-bold text-gray-800">PortalBerita</h1>
+                        <h1 class="text-2xl font-bold text-gray-800">Perisai Demokrasi Bangsa</h1>
                         <p class="text-sm text-gray-600">Perisai Demokrasi Bangsa</p>
                     </div>
                 </div>
@@ -48,7 +48,7 @@
     <!-- Hero Section -->
     <section class="bg-gradient-to-r from-gray-900 via-gray-800 to-amber-900 text-white py-16">
         <div class="container mx-auto px-4 text-center">
-            <h2 class="text-4xl md:text-5xl font-bold mb-4">Tentang PortalBerita</h2>
+            <h2 class="text-4xl md:text-5xl font-bold mb-4">Tentang Perisai Demokrasi Bangsa</h2>
             <p class="text-xl mb-8 opacity-90">{{ $profileData['tagline'] }}</p>
             @auth
             <a href="{{ route('admin.pages.index') }}" 
@@ -215,7 +215,7 @@
                         <div class="w-10 h-10 bg-white rounded-full flex items-center justify-center p-1">
                             <img src="{{ asset('img/logo.png') }}" alt="Logo" class="w-full h-full object-contain">
                         </div>
-                        <span class="text-xl font-bold text-amber-500">PortalBerita</span>
+                        <span class="text-xl font-bold text-amber-500">Perisai Demokrasi Bangsa</span>
                     </div>
                     <p class="text-gray-400">Menyajikan informasi terkini dan terpercaya untuk masyarakat.</p>
                 </div>
@@ -253,7 +253,7 @@
             </div>
             
             <div class="border-t border-gray-800 mt-8 pt-8 text-center text-gray-500">
-                <p>&copy; 2025 PortalBerita. mhnaufal16.</p>
+                <p>&copy; 2025 Perisai Demokrasi Bangsa. mhnaufal16.</p>
             </div>
         </div>
     </footer>
