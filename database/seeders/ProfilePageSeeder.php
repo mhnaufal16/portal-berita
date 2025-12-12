@@ -2,8 +2,7 @@
 
 namespace Database\Seeders;
 
-use App\Models\Post;
-use App\Models\Category;
+use App\Models\Page;
 use Illuminate\Database\Seeder;
 
 class ProfilePageSeeder extends Seeder
@@ -194,24 +193,12 @@ class ProfilePageSeeder extends Seeder
 HTML;
 
         // Only create if not exists
-        if (!Post::where('slug', 'profile-perusahaan')->exists()) {
-            $category = Category::first(); // Just grab first category or create one
-            if (!$category) {
-                $category = Category::create([
-                    'name' => 'Umum',
-                    'slug' => 'umum',
-                    'description' => 'Kategori Umum'
-                ]);
-            }
-
-            Post::create([
+        if (!Page::where('slug', 'profile-perusahaan')->exists()) {
+            Page::create([
                 'title' => 'Tentang Kami',
                 'slug' => 'profile-perusahaan',
                 'content' => $content,
-                'category_id' => $category->id,
-                'user_id' => 1, // Assume admin user id 1
                 'is_published' => true,
-                'published_at' => now(),
             ]);
         }
     }

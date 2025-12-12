@@ -99,86 +99,6 @@
                             </p>
                         </div>
 
-                        <!-- Category -->
-                        <div>
-                            <label for="category_id" class="block text-sm font-medium text-gray-700 mb-3 flex items-center">
-                                <i class="fas fa-folder text-primary-600 mr-2"></i>
-                                Kategori
-                                <span class="text-red-500 ml-1">*</span>
-                            </label>
-                            <select name="category_id" 
-                                    id="category_id" 
-                                    required
-                                    class="w-full border border-gray-300 rounded-xl px-4 py-4 focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition duration-200 bg-gray-50 focus:bg-white">
-                                <option value="">Pilih Kategori</option>
-                                @foreach($categories as $category)
-                                    <option value="{{ $category->id }}" 
-                                        {{ old('category_id', $page->category_id) == $category->id ? 'selected' : '' }}>
-                                        {{ $category->name }}
-                                    </option>
-                                @endforeach
-                            </select>
-                            @error('category_id')
-                                <p class="text-red-500 text-sm mt-2 flex items-center">
-                                    <i class="fas fa-exclamation-circle mr-2"></i>{{ $message }}
-                                </p>
-                            @enderror
-                        </div>
-
-                        <!-- Featured Image -->
-                        <div>
-                            <label for="featured_image" class="block text-sm font-medium text-gray-700 mb-3 flex items-center">
-                                <i class="fas fa-image text-primary-600 mr-2"></i>
-                                Gambar Featured
-                            </label>
-                            
-                            <!-- Current Image -->
-                            @if($page->featured_image)
-                                <div class="mb-4">
-                                    <p class="text-sm text-gray-600 mb-2">Gambar saat ini:</p>
-                                    <div class="relative inline-block">
-                                        <img src="{{ Storage::disk('public')->url($page->featured_image) }}" 
-                                             alt="{{ $page->title }}" 
-                                             class="w-32 h-32 object-cover rounded-lg border border-gray-300">
-                                        <a href="{{ Storage::disk('public')->url($page->featured_image) }}" 
-                                           target="_blank"
-                                           class="absolute inset-0 bg-black bg-opacity-0 hover:bg-opacity-20 transition duration-200 rounded-lg flex items-center justify-center">
-                                            <i class="fas fa-search-plus text-white text-lg opacity-0 hover:opacity-100 transition duration-200"></i>
-                                        </a>
-                                    </div>
-                                </div>
-                            @endif
-
-                            <!-- New Image Upload & Preview -->
-                            <div id="image-preview" class="mb-4 hidden">
-                                <p class="text-sm text-gray-600 mb-2">Preview gambar baru:</p>
-                                <div class="relative inline-block">
-                                    <img id="preview-image" 
-                                         src="" 
-                                         alt="Preview" 
-                                         class="w-32 h-32 object-cover rounded-lg border border-gray-300">
-                                    <div class="absolute inset-0 bg-black bg-opacity-0 hover:bg-opacity-20 transition duration-200 rounded-lg flex items-center justify-center">
-                                        <i class="fas fa-search-plus text-white text-lg opacity-0 hover:opacity-100 transition duration-200"></i>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <input type="file" 
-                                   name="featured_image" 
-                                   id="featured_image"
-                                   class="w-full border border-gray-300 rounded-xl px-4 py-3 focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition duration-200 bg-gray-50 focus:bg-white file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-primary-50 file:text-primary-700 hover:file:bg-primary-100"
-                                   accept="image/*">
-                            <p class="text-xs text-gray-500 mt-2 flex items-center">
-                                <i class="fas fa-info-circle mr-2"></i>
-                                Format: JPG, PNG, GIF. Maksimal 2MB
-                            </p>
-                            @error('featured_image')
-                                <p class="text-red-500 text-sm mt-2 flex items-center">
-                                    <i class="fas fa-exclamation-circle mr-2"></i>{{ $message }}
-                                </p>
-                            @enderror
-                        </div>
-
                         <!-- Content -->
                         <div>
                             <label for="content" class="block text-sm font-medium text-gray-700 mb-3 flex items-center">
@@ -281,10 +201,6 @@
                         <span class="font-semibold text-primary-600">{{ $page->updated_at->format('d M Y H:i') }}</span>
                     </div>
                     <div class="flex justify-between items-center">
-                        <span class="text-gray-600">Pembuat:</span>
-                        <span class="font-semibold text-primary-600">{{ $page->user->name ?? 'Unknown' }}</span>
-                    </div>
-                    <div class="flex justify-between items-center">
                         <span class="text-gray-600">Status:</span>
                         @if($page->is_published)
                             <span class="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-green-100 text-green-800">
@@ -367,10 +283,6 @@
                     </li>
                     <li class="flex items-start">
                         <i class="fas fa-check mt-1 mr-3 text-blue-600 flex-shrink-0"></i>
-                        <span>Gunakan gambar yang relevan dan optimal</span>
-                    </li>
-                    <li class="flex items-start">
-                        <i class="fas fa-check mt-1 mr-3 text-blue-600 flex-shrink-0"></i>
                         <span>Simpan sebagai draft untuk preview</span>
                     </li>
                 </ul>
@@ -406,8 +318,6 @@
 
     // Auto generate slug from title
     document.getElementById('title').addEventListener('input', function() {
-        // Only auto-update slug if it's empty or matches cleaned title (to prevent overwriting custom slug)
-        // But for simplicity in this script, we'll keep the existing logic or make it smarter.
         const title = this.value;
         const slugInput = document.getElementById('slug');
         
@@ -425,26 +335,6 @@
     document.getElementById('slug').addEventListener('input', function() {
         const slug = this.value;
         document.getElementById('slug-preview').textContent = slug;
-    });
-
-    // Image preview functionality
-    document.getElementById('featured_image').addEventListener('change', function(e) {
-        const file = e.target.files[0];
-        const preview = document.getElementById('preview-image');
-        const previewContainer = document.getElementById('image-preview');
-        
-        if (file) {
-            const reader = new FileReader();
-            
-            reader.onload = function(e) {
-                preview.src = e.target.result;
-                previewContainer.classList.remove('hidden');
-            }
-            
-            reader.readAsDataURL(file);
-        } else {
-            previewContainer.classList.add('hidden');
-        }
     });
 </script>
 

@@ -11,130 +11,142 @@
     <!-- Header -->
     <header class="bg-white shadow-sm">
         <div class="container mx-auto px-4">
-            <div class="flex justify-between items-center py-4">
-                <div class="flex items-center space-x-2">
-                    <div class="w-10 h-10 bg-blue-600 rounded-full flex items-center justify-center">
-                        <i class="fas fa-newspaper text-white text-lg"></i>
+            <div class="flex justify-between items-center py-3">
+                <div class="flex items-center space-x-3">
+                    <div class="w-12 h-12">
+                        <img src="{{ asset('img/logo.png') }}" alt="Logo" class="w-full h-full object-contain">
                     </div>
                     <div>
-                        <a href="{{ route('home') }}" class="text-2xl font-bold text-gray-800 hover:text-blue-600 transition duration-200">Perisai Demokrasi Bangsa</a>
-                        <p class="text-sm text-gray-600">Informasi Terkini dan Terpercaya</p>
+                        <a href="{{ route('home') }}" class="text-xl font-bold text-gray-900 hover:text-amber-600 transition duration-200">Perisai Demokrasi Bangsa</a>
+                        <p class="text-xs text-gray-600">Perisai Demokrasi Bangsa</p>
                     </div>
                 </div>
                 
-                <nav class="hidden md:flex space-x-8">
-                    <a href="{{ route('home') }}" class="text-gray-600 hover:text-blue-600 transition duration-200">Beranda</a>
-                    <a href="{{ route('pages.profile') }}" class="text-gray-600 hover:text-blue-600 transition duration-200">Tentang Kami</a>
+                <nav class="hidden md:flex items-center space-x-8">
+                    <a href="{{ route('home') }}" class="text-gray-700 hover:text-amber-600 transition duration-200 text-sm font-medium">Beranda</a>
+                    <a href="{{ route('pages.profile') }}" class="text-gray-700 hover:text-amber-600 transition duration-200 text-sm font-medium">Tentang Kami</a>
                     @auth
-                        <a href="{{ route('admin.dashboard') }}" class="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition duration-200">
-                            <i class="fas fa-tachometer-alt mr-2"></i>Admin Panel
-                        </a>
-                    @else
-                        <a href="{{ route('login') }}" class="text-gray-600 hover:text-blue-600 transition duration-200">
-                            <i class="fas fa-sign-in-alt mr-1"></i>Login
+                        <a href="{{ route('admin.dashboard') }}" class="bg-amber-500 text-white px-4 py-2 rounded-lg hover:bg-amber-600 transition duration-200 text-sm font-medium flex items-center">
+                            <i class="fas fa-user-shield mr-2"></i>Admin Panel
                         </a>
                     @endauth
                 </nav>
+
+                <!-- Mobile menu button -->
+                <button class="md:hidden text-gray-600">
+                    <i class="fas fa-bars text-xl"></i>
+                </button>
             </div>
         </div>
     </header>
 
     <!-- Breadcrumb -->
-    <nav class="bg-blue-50 border-b border-blue-100">
+    <nav class="bg-white border-b border-gray-200">
         <div class="container mx-auto px-4 py-3">
-            <div class="flex items-center space-x-2 text-sm text-blue-700">
-                <a href="{{ route('home') }}" class="hover:text-blue-900 transition duration-200">
+            <div class="flex items-center space-x-2 text-sm">
+                <a href="{{ route('home') }}" class="text-amber-600 hover:text-amber-700 transition duration-200 flex items-center">
                     <i class="fas fa-home mr-1"></i>Beranda
                 </a>
-                <i class="fas fa-chevron-right text-blue-400"></i>
-                <a href="{{ route('home') }}#berita-terbaru" class="hover:text-blue-900 transition duration-200">Berita</a>
-                <i class="fas fa-chevron-right text-blue-400"></i>
-                <span class="text-blue-900 font-medium">{{ $post->category->name }}</span>
-                <i class="fas fa-chevron-right text-blue-400"></i>
-                <span class="text-gray-600 truncate">{{ Str::limit($post->title, 50) }}</span>
+                <i class="fas fa-chevron-right text-gray-400 text-xs"></i>
+                <a href="{{ route('home') }}#berita-terbaru" class="text-amber-600 hover:text-amber-700 transition duration-200">Berita</a>
+                <i class="fas fa-chevron-right text-gray-400 text-xs"></i>
+                <span class="text-gray-700 font-medium">{{ $post->category->name }}</span>
+                <i class="fas fa-chevron-right text-gray-400 text-xs"></i>
+                <span class="text-gray-500 truncate max-w-xs">{{ Str::limit($post->title, 30) }}</span>
             </div>
         </div>
     </nav>
 
-    <!-- Article Content -->
+    <!-- Main Content -->
     <main class="container mx-auto px-4 py-8">
-        <article class="max-w-4xl mx-auto">
+        <div class="max-w-4xl mx-auto">
             <!-- Article Header -->
-            <header class="mb-8 text-center">
-                <span class="inline-block bg-blue-100 text-blue-800 px-4 py-2 rounded-full text-sm font-semibold mb-4">
+            <div class="text-center mb-8">
+                <span class="inline-block bg-amber-100 text-amber-700 px-4 py-1 rounded-full text-sm font-medium mb-4">
                     {{ $post->category->name }}
                 </span>
-                <h1 class="text-4xl md:text-5xl font-bold text-gray-800 mb-6 leading-tight">{{ $post->title }}</h1>
+                <h1 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4 leading-tight">{{ $post->title }}</h1>
                 
-                <div class="flex flex-wrap justify-center items-center gap-4 text-gray-600 mb-6">
-                    <div class="flex items-center">
-                        <i class="far fa-user mr-2"></i>
-                        <span>{{ $post->user->name }}</span>
-                    </div>
-                    <div class="flex items-center">
-                        <i class="far fa-clock mr-2"></i>
-                        <span>{{ $post->created_at->format('d M Y') }}</span>
-                    </div>
-                    <div class="flex items-center">
-                        <i class="far fa-eye mr-2"></i>
-                        <span>{{ rand(100, 1000) }} dibaca</span>
-                    </div>
+                <div class="flex items-center justify-center space-x-4 text-sm text-gray-600">
+                    <span class="flex items-center">
+                        <i class="far fa-user mr-1"></i>
+                        {{ $post->user->name }}
+                    </span>
+                    <span class="flex items-center">
+                        <i class="far fa-clock mr-1"></i>
+                        {{ $post->created_at->format('d M Y') }}
+                    </span>
+                    <span class="flex items-center">
+                        <i class="far fa-eye mr-1"></i>
+                        {{ rand(100, 1000) }} dibaca
+                    </span>
                 </div>
+            </div>
 
-                @if($post->featured_image)
-                <div class="rounded-2xl overflow-hidden shadow-lg mb-6">
-                    <img src="{{ asset('storage/' . $post->featured_image) }}" alt="{{ $post->title }}" class="w-full h-96 object-cover">
-                </div>
-                @endif
-            </header>
+            <!-- Featured Image -->
+            @if($post->featured_image)
+            <div class="rounded-lg overflow-hidden shadow-md mb-8">
+                <img src="{{ asset('storage/' . $post->featured_image) }}" alt="{{ $post->title }}" class="w-full h-auto object-cover">
+            </div>
+            @endif
 
             <!-- Article Excerpt -->
             @if($post->excerpt)
-            <div class="bg-blue-50 border-l-4 border-blue-600 p-6 mb-8 rounded-r-lg">
-                <p class="text-lg text-gray-700 italic">"{{ $post->excerpt }}"</p>
+            <div class="bg-amber-50 border-l-4 border-amber-500 p-5 mb-8 rounded-r">
+                <p class="text-gray-700 italic text-base">"{{ $post->excerpt }}"</p>
             </div>
             @endif
 
             <!-- Article Content -->
-            <div class="prose prose-lg max-w-none mb-12">
-                <div class="text-gray-700 leading-relaxed text-justify">
+            <div class="bg-white rounded-lg shadow-sm p-8 mb-8">
+                <div class="prose prose-lg max-w-none text-gray-700 leading-relaxed text-justify">
                     {!! nl2br(e($post->content)) !!}
                 </div>
             </div>
 
-            <!-- Article Footer -->
-            <footer class="border-t border-gray-200 pt-8">
-                <div class="flex flex-wrap justify-between items-center gap-4">
-                    <div class="flex items-center space-x-4">
-                        <span class="text-gray-600">Bagikan:</span>
+            <!-- Share & Category Section -->
+            <div class="bg-white rounded-lg shadow-sm p-6">
+                <div class="flex items-center justify-between flex-wrap gap-4">
+                    <div class="flex items-center space-x-3">
+                        <span class="text-gray-700 font-medium">Bagikan:</span>
                         <div class="flex space-x-2">
-                            <a href="#" class="w-10 h-10 bg-blue-600 rounded-full flex items-center justify-center text-white hover:bg-blue-700 transition duration-200">
-                                <i class="fab fa-facebook-f"></i>
+                            <a href="https://www.facebook.com/sharer/sharer.php?u={{ urlencode(url()->current()) }}" 
+                               target="_blank"
+                               class="w-9 h-9 bg-blue-600 rounded-full flex items-center justify-center text-white hover:bg-blue-700 transition duration-200"
+                               title="Share to Facebook">
+                                <i class="fab fa-facebook-f text-sm"></i>
                             </a>
-                            <a href="#" class="w-10 h-10 bg-blue-400 rounded-full flex items-center justify-center text-white hover:bg-blue-500 transition duration-200">
-                                <i class="fab fa-twitter"></i>
+                            <a href="https://twitter.com/intent/tweet?url={{ urlencode(url()->current()) }}&text={{ urlencode($post->title) }}" 
+                               target="_blank"
+                               class="w-9 h-9 bg-sky-500 rounded-full flex items-center justify-center text-white hover:bg-sky-600 transition duration-200"
+                               title="Share to Twitter">
+                                <i class="fab fa-twitter text-sm"></i>
                             </a>
-                            <a href="#" class="w-10 h-10 bg-green-500 rounded-full flex items-center justify-center text-white hover:bg-green-600 transition duration-200">
-                                <i class="fab fa-whatsapp"></i>
+                            <a href="https://wa.me/?text={{ urlencode($post->title . ' ' . url()->current()) }}" 
+                               target="_blank"
+                               class="w-9 h-9 bg-green-500 rounded-full flex items-center justify-center text-white hover:bg-green-600 transition duration-200"
+                               title="Share to WhatsApp">
+                                <i class="fab fa-whatsapp text-sm"></i>
                             </a>
                         </div>
                     </div>
                     
                     <div class="flex items-center space-x-2 text-gray-600">
                         <i class="fas fa-tags"></i>
-                        <span class="font-medium">Kategori:</span>
-                        <span class="bg-gray-100 px-3 py-1 rounded-full text-sm">{{ $post->category->name }}</span>
+                        <span class="font-medium text-sm">Kategori:</span>
+                        <span class="bg-amber-100 text-amber-700 px-3 py-1 rounded-full text-sm font-medium">{{ $post->category->name }}</span>
                     </div>
                 </div>
-            </footer>
-        </article>
+            </div>
+        </div>
     </main>
 
-    <!-- Related Posts Section -->
-    <section class="bg-gray-100 py-12">
+    <!-- Berita Lainnya Section -->
+    <section class="bg-gray-100 py-12 mt-8">
         <div class="container mx-auto px-4">
-            <h2 class="text-3xl font-bold text-gray-800 mb-8 text-center">
-                <i class="fas fa-newspaper mr-3 text-blue-600"></i>Berita Lainnya
+            <h2 class="text-2xl font-bold text-gray-900 mb-8 flex items-center justify-center">
+                <i class="fas fa-newspaper mr-3 text-amber-600"></i>
+                Berita Lainnya
             </h2>
             
             @php
@@ -147,29 +159,29 @@
             @endphp
             
             @if($relatedPosts->count() > 0)
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-6xl mx-auto">
                 @foreach($relatedPosts as $relatedPost)
-                <article class="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition duration-300">
+                <article class="bg-white rounded-lg shadow-sm overflow-hidden hover:shadow-lg transition duration-300">
                     @if($relatedPost->featured_image)
                     <div class="h-48 bg-gray-200 overflow-hidden">
-                        <img src="{{ asset('storage/' . $relatedPost->featured_image) }}" alt="{{ $relatedPost->title }}" class="w-full h-full object-cover">
+                        <img src="{{ asset('storage/' . $relatedPost->featured_image) }}" alt="{{ $relatedPost->title }}" class="w-full h-full object-cover hover:scale-105 transition duration-300">
                     </div>
                     @else
-                    <div class="h-48 bg-gradient-to-br from-blue-500 to-blue-700 flex items-center justify-center">
-                        <i class="fas fa-newspaper text-white text-4xl"></i>
+                    <div class="h-48 bg-gradient-to-br from-gray-700 to-gray-900 flex items-center justify-center">
+                        <i class="fas fa-newspaper text-amber-500 text-4xl"></i>
                     </div>
                     @endif
                     
-                    <div class="p-6">
-                        <span class="bg-blue-100 text-blue-800 px-3 py-1 rounded-full text-sm font-semibold mb-3 inline-block">
+                    <div class="p-5">
+                        <span class="bg-amber-100 text-amber-700 px-3 py-1 rounded-full text-xs font-medium mb-3 inline-block">
                             {{ $relatedPost->category->name }}
                         </span>
                         
-                        <h3 class="text-xl font-bold text-gray-800 mb-3 line-clamp-2">{{ $relatedPost->title }}</h3>
-                        <p class="text-gray-600 mb-4 line-clamp-3">{{ $relatedPost->excerpt }}</p>
+                        <h3 class="text-lg font-bold text-gray-900 mb-2 line-clamp-2">{{ $relatedPost->title }}</h3>
+                        <p class="text-gray-600 text-sm mb-4 line-clamp-2">{{ $relatedPost->excerpt }}</p>
                         
-                        <a href="{{ route('posts.show', $relatedPost->slug) }}" class="text-blue-600 hover:text-blue-800 font-semibold text-sm inline-flex items-center">
-                            Baca Selengkapnya <i class="fas fa-arrow-right ml-2"></i>
+                        <a href="{{ route('posts.show', $relatedPost->slug) }}" class="text-amber-600 hover:text-amber-700 font-medium text-sm inline-flex items-center">
+                            Baca Selengkapnya <i class="fas fa-arrow-right ml-2 text-xs"></i>
                         </a>
                     </div>
                 </article>
@@ -178,7 +190,7 @@
             @else
             <div class="text-center py-8">
                 <p class="text-gray-600">Belum ada berita lainnya dalam kategori ini.</p>
-                <a href="{{ route('home') }}" class="inline-block mt-4 bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700 transition duration-200">
+                <a href="{{ route('home') }}" class="inline-block mt-4 bg-amber-500 text-white px-6 py-3 rounded-lg hover:bg-amber-600 transition duration-200 text-sm font-medium">
                     <i class="fas fa-newspaper mr-2"></i>Lihat Semua Berita
                 </a>
             </div>
@@ -186,53 +198,59 @@
         </div>
     </section>
 
-    <!-- Footer (sama seperti homepage) -->
-    <footer class="bg-gray-800 text-white py-12">
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-white py-10">
         <div class="container mx-auto px-4">
             <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
                 <div>
-                    <div class="flex items-center space-x-2 mb-4">
-                        <div class="w-8 h-8 bg-blue-500 rounded-full flex items-center justify-center">
-                            <i class="fas fa-newspaper text-white"></i>
+                    <div class="flex items-center space-x-3 mb-4">
+                        <div class="w-10 h-10">
+                            <img src="{{ asset('img/logo.png') }}" alt="Logo" class="w-full h-full object-contain brightness-0 invert">
                         </div>
-                        <span class="text-xl font-bold">Perisai Demokrasi Bangsa</span>
+                        <span class="text-lg font-bold">Perisai Demokrasi Bangsa</span>
                     </div>
-                    <p class="text-gray-400">Menyajikan informasi terkini dan terpercaya untuk masyarakat.</p>
+                    <p class="text-gray-400 text-sm">Menyajikan informasi terkini dan terpercaya untuk masyarakat.</p>
                 </div>
                 
                 <div>
-                    <h4 class="font-semibold mb-4">Quick Links</h4>
-                    <ul class="space-y-2">
-                        <li><a href="{{ route('home') }}" class="text-gray-400 hover:text-white transition duration-200">Beranda</a></li>
-                        <li><a href="{{ route('pages.profile') }}" class="text-gray-400 hover:text-white transition duration-200">Tentang Kami</a></li>
+                    <h4 class="font-semibold mb-4 text-sm text-amber-500">Quick Links</h4>
+                    <ul class="space-y-2 text-sm">
+                        <li><a href="{{ route('home') }}" class="text-gray-400 hover:text-amber-500 transition duration-200">Beranda</a></li>
+                        <li><a href="{{ route('pages.profile') }}" class="text-gray-400 hover:text-amber-500 transition duration-200">Tentang Kami</a></li>
                     </ul>
                 </div>
                 
                 <div>
-                    <h4 class="font-semibold mb-4">Kontak</h4>
-                    <ul class="space-y-2 text-gray-400">
-                        <li><i class="fas fa-envelope mr-2"></i>info@Perisai Demokrasi Bangsa.com</li>
-                        <li><i class="fas fa-phone mr-2"></i>+62 123 4567 890</li>
+                    <h4 class="font-semibold mb-4 text-sm text-amber-500">Kontak</h4>
+                    <ul class="space-y-2 text-gray-400 text-sm">
+                        <li class="flex items-center">
+                            <i class="fas fa-envelope mr-2 text-amber-500"></i>
+                            info@perisaidemokrasibangsa.com
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-phone mr-2 text-amber-500"></i>
+                            +62 123 4567 890
+                        </li>
                     </ul>
                 </div>
                 
                 <div>
-                    <h4 class="font-semibold mb-4">Follow Kami</h4>
-                    <div class="flex space-x-4">
-                        <a href="#" class="w-10 h-10 bg-blue-600 rounded-full flex items-center justify-center hover:bg-blue-700 transition duration-200">
+                    <h4 class="font-semibold mb-4 text-sm text-amber-500">Follow Kami</h4>
+                    <div class="flex space-x-3">
+                        <a href="#" class="w-9 h-9 bg-gray-800 rounded-full flex items-center justify-center hover:bg-amber-600 transition duration-200">
                             <i class="fab fa-facebook-f"></i>
                         </a>
-                        <a href="#" class="w-10 h-10 bg-blue-400 rounded-full flex items-center justify-center hover:bg-blue-500 transition duration-200">
+                        <a href="#" class="w-9 h-9 bg-gray-800 rounded-full flex items-center justify-center hover:bg-amber-600 transition duration-200">
                             <i class="fab fa-twitter"></i>
                         </a>
-                        <a href="#" class="w-10 h-10 bg-pink-600 rounded-full flex items-center justify-center hover:bg-pink-700 transition duration-200">
+                        <a href="#" class="w-9 h-9 bg-gray-800 rounded-full flex items-center justify-center hover:bg-amber-600 transition duration-200">
                             <i class="fab fa-instagram"></i>
                         </a>
                     </div>
                 </div>
             </div>
             
-            <div class="border-t border-gray-700 mt-8 pt-8 text-center text-gray-400">
+            <div class="border-t border-gray-800 mt-8 pt-6 text-center text-gray-500 text-sm">
                 <p>&copy; 2025 Perisai Demokrasi Bangsa. mhnaufal16.</p>
             </div>
         </div>
@@ -245,17 +263,11 @@
             -webkit-box-orient: vertical;
             overflow: hidden;
         }
-        .line-clamp-3 {
-            display: -webkit-box;
-            -webkit-line-clamp: 3;
-            -webkit-box-orient: vertical;
-            overflow: hidden;
-        }
         .prose {
             line-height: 1.75;
         }
         .prose p {
-            margin-bottom: 1.5em;
+            margin-bottom: 1.25em;
         }
     </style>
 </body>

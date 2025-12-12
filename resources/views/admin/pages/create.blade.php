@@ -84,68 +84,6 @@
                             </p>
                         </div>
 
-                        <!-- Category -->
-                        <div>
-                            <label for="category_id" class="block text-sm font-medium text-gray-700 mb-3 flex items-center">
-                                <i class="fas fa-folder text-primary-600 mr-2"></i>
-                                Kategori
-                                <span class="text-red-500 ml-1">*</span>
-                            </label>
-                            <select name="category_id" 
-                                    id="category_id" 
-                                    required
-                                    class="w-full border border-gray-300 rounded-xl px-4 py-4 focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition duration-200 bg-gray-50 focus:bg-white">
-                                <option value="">Pilih Kategori</option>
-                                @foreach($categories as $category)
-                                    <option value="{{ $category->id }}" {{ old('category_id') == $category->id ? 'selected' : '' }}>
-                                        {{ $category->name }}
-                                    </option>
-                                @endforeach
-                            </select>
-                            @error('category_id')
-                                <p class="text-red-500 text-sm mt-2 flex items-center">
-                                    <i class="fas fa-exclamation-circle mr-2"></i>{{ $message }}
-                                </p>
-                            @enderror
-                        </div>
-
-                        <!-- Featured Image -->
-                        <div>
-                            <label for="featured_image" class="block text-sm font-medium text-gray-700 mb-3 flex items-center">
-                                <i class="fas fa-image text-primary-600 mr-2"></i>
-                                Gambar Featured
-                            </label>
-                            
-                            <!-- Image Preview -->
-                            <div id="image-preview" class="mb-4 hidden">
-                                <p class="text-sm text-gray-600 mb-2">Preview gambar:</p>
-                                <div class="relative inline-block">
-                                    <img id="preview-image" 
-                                         src="" 
-                                         alt="Preview" 
-                                         class="w-32 h-32 object-cover rounded-lg border border-gray-300">
-                                    <div class="absolute inset-0 bg-black bg-opacity-0 hover:bg-opacity-20 transition duration-200 rounded-lg flex items-center justify-center">
-                                        <i class="fas fa-search-plus text-white text-lg opacity-0 hover:opacity-100 transition duration-200"></i>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <input type="file" 
-                                   name="featured_image" 
-                                   id="featured_image"
-                                   class="w-full border border-gray-300 rounded-xl px-4 py-3 focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition duration-200 bg-gray-50 focus:bg-white file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-primary-50 file:text-primary-700 hover:file:bg-primary-100"
-                                   accept="image/*">
-                            <p class="text-xs text-gray-500 mt-2 flex items-center">
-                                <i class="fas fa-info-circle mr-2"></i>
-                                Format: JPG, PNG, GIF. Maksimal 2MB
-                            </p>
-                            @error('featured_image')
-                                <p class="text-red-500 text-sm mt-2 flex items-center">
-                                    <i class="fas fa-exclamation-circle mr-2"></i>{{ $message }}
-                                </p>
-                            @enderror
-                        </div>
-
                         <!-- Content -->
                         <div>
                             <label for="content" class="block text-sm font-medium text-gray-700 mb-3 flex items-center">
@@ -228,15 +166,15 @@
                         <div class="space-y-2 text-sm">
                             <div class="flex justify-between items-center">
                                 <span class="text-gray-600">Total Halaman:</span>
-                                <span class="font-semibold text-primary-600">{{ \App\Models\Post::count() }}</span>
+                                <span class="font-semibold text-primary-600">{{ \App\Models\Page::count() }}</span>
                             </div>
                             <div class="flex justify-between items-center">
                                 <span class="text-gray-600">Published:</span>
-                                <span class="font-semibold text-green-600">{{ \App\Models\Post::where('is_published', true)->count() }}</span>
+                                <span class="font-semibold text-green-600">{{ \App\Models\Page::where('is_published', true)->count() }}</span>
                             </div>
                             <div class="flex justify-between items-center">
                                 <span class="text-gray-600">Draft:</span>
-                                <span class="font-semibold text-yellow-600">{{ \App\Models\Post::where('is_published', false)->count() }}</span>
+                                <span class="font-semibold text-yellow-600">{{ \App\Models\Page::where('is_published', false)->count() }}</span>
                             </div>
                         </div>
                     </div>
@@ -296,7 +234,31 @@
     </div>
 </div>
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/tinymce/6.8.2/tinymce.min.js" referrerpolicy="origin"></script>
 <script>
+    // Initialize TinyMCE
+    tinymce.init({
+        selector: '#content',
+        height: 500,
+        plugins: 'anchor autolink charmap codesample emoticons image link lists media searchreplace table visualblocks wordcount',
+        toolbar: 'undo redo | blocks fontfamily fontsize | bold italic underline strikethrough | link image media table | align lineheight | numlist bullist indent outdent | emoticons charmap | removeformat',
+        content_style: 'body { font-family:Instrument Sans,sans-serif; font-size:16px }',
+        setup: function (editor) {
+            editor.on('input change', function () {
+                const content = editor.getContent();
+                const counter = document.getElementById('content-counter');
+                
+                counter.textContent = content.length + ' karakter';
+                
+                if (content.length > 50000) {
+                    counter.classList.add('text-red-500');
+                } else {
+                    counter.classList.remove('text-red-500');
+                }
+            });
+        }
+    });
+
     // Auto generate slug from title
     document.getElementById('title').addEventListener('input', function() {
         const title = this.value;
@@ -317,53 +279,6 @@
         const slug = this.value;
         document.getElementById('slug-preview').textContent = slug;
         document.getElementById('preview-slug').textContent = slug || '-';
-    });
-
-    // Content character counter and preview
-    document.getElementById('content').addEventListener('input', function() {
-        const content = this.value;
-        const counter = document.getElementById('content-counter');
-        
-        counter.textContent = content.length + ' karakter';
-        document.getElementById('preview-content').textContent = content ? content.substring(0, 100) + '...' : '-';
-        
-        if (content.length > 10000) {
-            counter.classList.add('text-red-500');
-        } else {
-            counter.classList.remove('text-red-500');
-        }
-    });
-
-    // Image preview functionality
-    document.getElementById('featured_image').addEventListener('change', function(e) {
-        const file = e.target.files[0];
-        const preview = document.getElementById('preview-image');
-        const previewContainer = document.getElementById('image-preview');
-        
-        if (file) {
-            const reader = new FileReader();
-            
-            reader.onload = function(e) {
-                preview.src = e.target.result;
-                previewContainer.classList.remove('hidden');
-            }
-            
-            reader.readAsDataURL(file);
-        } else {
-            previewContainer.classList.add('hidden');
-        }
-    });
-
-    // Initialize previews on page load
-    document.addEventListener('DOMContentLoaded', function() {
-        const title = document.getElementById('title').value;
-        const slug = document.getElementById('slug').value;
-        const content = document.getElementById('content').value;
-        
-        document.getElementById('preview-title').textContent = title || '-';
-        document.getElementById('preview-slug').textContent = slug || '-';
-        document.getElementById('preview-content').textContent = content ? content.substring(0, 100) + '...' : '-';
-        document.getElementById('content-counter').textContent = content.length + ' karakter';
     });
 </script>
 
