@@ -50,12 +50,7 @@
         <div class="container mx-auto px-4 text-center">
             <h2 class="text-4xl md:text-5xl font-bold mb-4">Tentang Perisai Demokrasi Bangsa</h2>
             <p class="text-xl mb-8 opacity-90">{{ $profileData['tagline'] }}</p>
-            @auth
-            <a href="{{ route('admin.pages.index') }}" 
-               class="bg-white text-amber-600 px-6 py-3 rounded-lg font-semibold hover:bg-gray-100 transition duration-200 inline-flex items-center border border-amber-500">
-                <i class="fas fa-cog mr-2"></i>Kelola Halaman Profile
-            </a>
-            @endif
+
         </div>
     </section>
 
@@ -192,16 +187,6 @@
 
             <!-- Call to Action untuk Admin -->
             @auth
-            <div class="mt-8 text-center">
-                <div class="bg-amber-50 border border-amber-200 rounded-xl p-6">
-                    <h4 class="text-lg font-semibold text-amber-800 mb-2">Ingin Mengubah Konten Ini?</h4>
-                    <p class="text-amber-700 mb-4">Kelola halaman profile perusahaan melalui admin panel untuk mengedit konten dengan mudah.</p>
-                    <a href="{{ route('admin.pages.index') }}" 
-                       class="bg-amber-600 text-white px-6 py-3 rounded-lg hover:bg-amber-700 transition duration-200 font-semibold inline-flex items-center">
-                        <i class="fas fa-cog mr-2"></i>Kelola Halaman Profile
-                    </a>
-                </div>
-            </div>
             @endif
         </div>
     </main>
