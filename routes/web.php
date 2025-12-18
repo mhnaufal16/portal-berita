@@ -14,17 +14,6 @@ Route::get('/dashboard', function () {
     return redirect()->route('admin.dashboard');
 });
 
-Route::prefix('admin')->name('admin.')->middleware(['auth'])->group(function () {
-    Route::resource('pages', \App\Http\Controllers\Admin\PageController::class)
-         ->parameters(['pages' => 'post'])
-         ->except(['create', 'store']);
-    
-    Route::post('/pages/{post}/publish', [\App\Http\Controllers\Admin\PageController::class, 'quickPublish'])
-        ->name('pages.quick-publish');
-    Route::post('/pages/{post}/unpublish', [\App\Http\Controllers\Admin\PageController::class, 'quickUnpublish'])
-        ->name('pages.quick-unpublish');
-});
-
 // Public Routes
 Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::get('/berita/{slug}', [PostController::class, 'show'])->name('posts.show');
@@ -35,14 +24,14 @@ Route::prefix('admin')->middleware(['auth'])->group(function () {
     Route::get('/dashboard', function () {
         $postCount = \App\Models\Post::count();
         $categoryCount = \App\Models\Category::count();
-        $pageCount = \App\Models\Post::where('slug', 'profile-perusahaan')->count();
+        $pageCount = \App\Models\Page::count();
         $todayPostCount = \App\Models\Post::whereDate('created_at', today())->count();
         $recentPosts = \App\Models\Post::with('category')->latest()->take(5)->get();
 
         return view('admin.dashboard', compact(
             'postCount', 
             'categoryCount', 
-            'pageCount', 
+            'pageCount',
             'todayPostCount',
             'recentPosts'
         ));
@@ -51,6 +40,10 @@ Route::prefix('admin')->middleware(['auth'])->group(function () {
     Route::resource('posts', AdminPostController::class)->names('admin.posts');
     Route::resource('categories', AdminCategoryController::class)->names('admin.categories');
     Route::resource('pages', AdminPageController::class)->names('admin.pages')->except(['create', 'store']);
+    
+    // Quick actions for pages
+    Route::post('/pages/{page}/publish', [AdminPageController::class, 'quickPublish'])->name('admin.pages.quick-publish');
+    Route::post('/pages/{page}/unpublish', [AdminPageController::class, 'quickUnpublish'])->name('admin.pages.quick-unpublish');
 });
 
 // Breeze Auth Routes

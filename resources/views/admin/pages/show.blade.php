@@ -12,26 +12,30 @@
     <header class="bg-white shadow-sm">
         <div class="container mx-auto px-4">
             <div class="flex justify-between items-center py-4">
-                <div class="flex items-center space-x-2">
-                    <div class="w-10 h-10 bg-blue-600 rounded-full flex items-center justify-center">
-                        <i class="fas fa-newspaper text-white text-lg"></i>
+                <div class="flex items-center space-x-3">
+                    <div class="w-12 h-12">
+                        <img src="{{ asset('img/logo.png') }}" alt="Logo" class="w-full h-full object-contain">
                     </div>
                     <div>
                         <h1 class="text-2xl font-bold text-gray-800">Perisai Demokrasi Bangsa</h1>
-                        <p class="text-sm text-gray-600">Informasi Terkini dan Terpercaya</p>
+                        <p class="text-sm text-gray-600">Perisai Demokrasi Bangsa</p>
                     </div>
                 </div>
                 
-                <nav class="hidden md:flex space-x-8">
-                    <a href="{{ route('home') }}" class="text-gray-600 hover:text-blue-600 transition duration-200">Beranda</a>
-                    <a href="{{ route('pages.profile') }}" class="text-blue-600 font-semibold border-b-2 border-blue-600 pb-1">Tentang Kami</a>
+                <nav class="hidden md:flex items-center space-x-8">
+                    <a href="{{ route('home') }}" class="flex items-center text-gray-600 hover:text-amber-600 transition duration-200">
+                        <i class="fas fa-home mr-2 text-amber-500"></i>Beranda
+                    </a>
+                    <a href="{{ route('pages.profile') }}" class="flex items-center text-amber-600 font-semibold border-b-2 border-amber-600 pb-1">
+                        <i class="fas fa-info-circle mr-2"></i>Tentang Kami
+                    </a>
                     @auth
-                        <a href="{{ route('admin.dashboard') }}" class="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition duration-200">
+                        <a href="{{ route('admin.dashboard') }}" class="bg-amber-500 text-white px-4 py-2 rounded-lg hover:bg-amber-600 transition duration-200 flex items-center">
                             <i class="fas fa-tachometer-alt mr-2"></i>Admin Panel
                         </a>
                     @else
-                        <a href="{{ route('login') }}" class="text-gray-600 hover:text-blue-600 transition duration-200">
-                            <i class="fas fa-sign-in-alt mr-1"></i>Login
+                        <a href="{{ route('login') }}" class="flex items-center text-gray-600 hover:text-amber-600 transition duration-200">
+                            <i class="fas fa-sign-in-alt mr-2 text-amber-500"></i>Login
                         </a>
                     @endauth
                 </nav>
@@ -50,7 +54,7 @@
             
             <div class="p-8">
                 <div class="flex items-center justify-between mb-6">
-                    <span class="bg-blue-100 text-blue-800 px-3 py-1 rounded-full text-sm font-semibold">
+                    <span class="bg-amber-100 text-amber-800 px-3 py-1 rounded-full text-sm font-semibold">
                         {{ $page->category->name ?? 'Halaman' }}
                     </span>
                     <span class="text-sm text-gray-500">
@@ -65,7 +69,7 @@
                 </div>
                 
                 <div class="mt-8 pt-6 border-t border-gray-200">
-                    <a href="{{ route('home') }}" class="text-blue-600 hover:text-blue-800 font-semibold">
+                    <a href="{{ route('home') }}" class="text-amber-600 hover:text-amber-800 font-semibold">
                         <i class="fas fa-arrow-left mr-2"></i>Kembali ke Beranda
                     </a>
                 </div>
@@ -74,37 +78,52 @@
     </main>
 
     <!-- Footer -->
-    <footer class="bg-gray-800 text-white py-12 mt-12">
+    <footer class="bg-gray-900 text-white py-12 border-t-4 border-amber-500">
         <div class="container mx-auto px-4">
             <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
                 <div>
-                    <div class="flex items-center space-x-2 mb-4">
-                        <div class="w-8 h-8 bg-blue-500 rounded-full flex items-center justify-center">
-                            <i class="fas fa-newspaper text-white"></i>
+                    <div class="flex items-center space-x-3 mb-4">
+                        <div class="w-10 h-10 bg-white rounded-full flex items-center justify-center p-1">
+                            <img src="{{ asset('img/logo.png') }}" alt="Logo" class="w-full h-full object-contain">
                         </div>
-                        <span class="text-xl font-bold">Perisai Demokrasi Bangsa</span>
+                        <span class="text-xl font-bold text-amber-500">Perisai Demokrasi Bangsa</span>
                     </div>
                     <p class="text-gray-400">Menyajikan informasi terkini dan terpercaya untuk masyarakat.</p>
                 </div>
                 
                 <div>
-                    <h4 class="font-semibold mb-4">Quick Links</h4>
+                    <h4 class="font-semibold mb-4 text-amber-500">Quick Links</h4>
                     <ul class="space-y-2">
-                        <li><a href="{{ route('home') }}" class="text-gray-400 hover:text-white transition duration-200">Beranda</a></li>
-                        <li><a href="{{ route('pages.profile') }}" class="text-gray-400 hover:text-white transition duration-200">Tentang Kami</a></li>
+                        <li><a href="{{ route('home') }}" class="text-gray-400 hover:text-amber-500 transition duration-200">Beranda</a></li>
+                        <li><a href="{{ route('pages.profile') }}" class="text-gray-400 hover:text-amber-500 transition duration-200">Tentang Kami</a></li>
                     </ul>
                 </div>
                 
                 <div>
-                    <h4 class="font-semibold mb-4">Kontak</h4>
+                    <h4 class="font-semibold mb-4 text-amber-500">Kontak</h4>
                     <ul class="space-y-2 text-gray-400">
-                        <li><i class="fas fa-envelope mr-2"></i>info@Perisai Demokrasi Bangsa.com</li>
-                        <li><i class="fas fa-phone mr-2"></i>+62 21 1234 5678</li>
+                        <li><i class="fas fa-envelope mr-2 text-amber-500"></i>info@perisaidemokrasibangsa.com</li>
+                        <li><i class="fas fa-phone mr-2 text-amber-500"></i>+62 123 4567 890</li>
                     </ul>
+                </div>
+                
+                <div>
+                    <h4 class="font-semibold mb-4 text-amber-500">Follow Kami</h4>
+                    <div class="flex space-x-4">
+                        <a href="#" class="w-10 h-10 bg-gray-800 rounded-full flex items-center justify-center hover:bg-amber-600 transition duration-200 text-white">
+                            <i class="fab fa-facebook-f"></i>
+                        </a>
+                        <a href="#" class="w-10 h-10 bg-gray-800 rounded-full flex items-center justify-center hover:bg-amber-600 transition duration-200 text-white">
+                            <i class="fab fa-twitter"></i>
+                        </a>
+                        <a href="#" class="w-10 h-10 bg-gray-800 rounded-full flex items-center justify-center hover:bg-amber-600 transition duration-200 text-white">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                    </div>
                 </div>
             </div>
             
-            <div class="border-t border-gray-700 mt-8 pt-8 text-center text-gray-400">
+            <div class="border-t border-gray-800 mt-8 pt-8 text-center text-gray-500">
                 <p>&copy; 2025 Perisai Demokrasi Bangsa. mhnaufal16.</p>
             </div>
         </div>

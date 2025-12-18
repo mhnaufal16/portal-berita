@@ -23,16 +23,20 @@
                     </div>
                 </div>
                 
-                <nav class="hidden md:flex space-x-8">
-                    <a href="{{ route('home') }}" class="text-amber-600 font-semibold border-b-2 border-amber-600 pb-1">Beranda</a>
-                    <a href="{{ route('pages.profile') }}" class="text-gray-600 hover:text-amber-600 transition duration-200">Tentang Kami</a>
+                <nav class="hidden md:flex items-center space-x-8">
+                    <a href="{{ route('home') }}" class="flex items-center text-amber-600 font-semibold border-b-2 border-amber-600 pb-1">
+                        <i class="fas fa-home mr-2"></i>Beranda
+                    </a>
+                    <a href="{{ route('pages.profile') }}" class="flex items-center text-gray-600 hover:text-amber-600 transition duration-200">
+                        <i class="fas fa-info-circle mr-2 text-amber-500"></i>Tentang Kami
+                    </a>
                     @auth
-                        <a href="{{ route('admin.dashboard') }}" class="bg-amber-500 text-white px-4 py-2 rounded-lg hover:bg-amber-600 transition duration-200">
+                        <a href="{{ route('admin.dashboard') }}" class="bg-amber-500 text-white px-4 py-2 rounded-lg hover:bg-amber-600 transition duration-200 flex items-center">
                             <i class="fas fa-tachometer-alt mr-2"></i>Admin Panel
                         </a>
                     @else
-                        <a href="{{ route('login') }}" class="text-gray-600 hover:text-amber-600 transition duration-200">
-                            <i class="fas fa-sign-in-alt mr-1"></i>Login
+                        <a href="{{ route('login') }}" class="flex items-center text-gray-600 hover:text-amber-600 transition duration-200">
+                            <i class="fas fa-sign-in-alt mr-2 text-amber-500"></i>Login
                         </a>
                     @endauth
                 </nav>

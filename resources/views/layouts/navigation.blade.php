@@ -76,19 +76,12 @@
                 <x-nav-link :href="route('home')" :active="request()->routeIs('home')">
                     {{ __('Home') }}
                 </x-nav-link>
-                
-                <x-nav-link :href="route('pages.profile')" :active="request()->routeIs('pages.profile')">
-                    {{ __('Profile Perusahaan') }}
-                </x-nav-link>
             @else
                 <!-- Untuk user belum login, tampilkan link biasa -->
                 <x-nav-link :href="route('home')" :active="request()->routeIs('home')">
                     {{ __('Home') }}
                 </x-nav-link>
-                
-                <x-nav-link :href="route('pages.profile')" :active="request()->routeIs('pages.profile')">
-                    {{ __('Profile Perusahaan') }}
-                </x-nav-link>
             @endauth
         </div>
+
 </nav>

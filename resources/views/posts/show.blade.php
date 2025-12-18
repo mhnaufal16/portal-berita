@@ -23,8 +23,12 @@
                 </div>
                 
                 <nav class="hidden md:flex items-center space-x-8">
-                    <a href="{{ route('home') }}" class="text-gray-700 hover:text-amber-600 transition duration-200 text-sm font-medium">Beranda</a>
-                    <a href="{{ route('pages.profile') }}" class="text-gray-700 hover:text-amber-600 transition duration-200 text-sm font-medium">Tentang Kami</a>
+                    <a href="{{ route('home') }}" class="flex items-center text-gray-700 hover:text-amber-600 transition duration-200 text-sm font-medium">
+                        <i class="fas fa-home mr-2 text-amber-500"></i>Beranda
+                    </a>
+                    <a href="{{ route('pages.profile') }}" class="flex items-center text-gray-700 hover:text-amber-600 transition duration-200 text-sm font-medium">
+                        <i class="fas fa-info-circle mr-2 text-amber-500"></i>Tentang Kami
+                    </a>
                     @auth
                         <a href="{{ route('admin.dashboard') }}" class="bg-amber-500 text-white px-4 py-2 rounded-lg hover:bg-amber-600 transition duration-200 text-sm font-medium flex items-center">
                             <i class="fas fa-user-shield mr-2"></i>Admin Panel
